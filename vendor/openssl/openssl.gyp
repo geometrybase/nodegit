@@ -36,6 +36,11 @@
               '__BYTE_ORDER=__BIG_ENDIAN',
               '__FLOAT_WORD_ORDER=__BIG_ENDIAN'],
         }],
+        [ 'OS=="win"', {
+            'cflags': [
+                '-fvisiblity=hidden'
+            ]
+        }],
         ['openssl_no_asm!=0', {
           # Disable asm
           'defines': [
