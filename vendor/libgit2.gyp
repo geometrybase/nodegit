@@ -15,18 +15,42 @@
       "type": "static_library",
       "defines": [
         "GIT_THREADS",
-        "GIT_SSH",
+        #"GIT_SSH",
         # Node's util.h may be accidentally included so use this to guard
         # against compilation error.
         "SRC_UTIL_H_",
+
+        # SUNOS
+        "GIT_SECURE_TRANSPORT",
+        "GIT_USE_STAT_MTIMESPEC",
+        "MTIME=4"
+      ],
+      #SUNOS
+      "cflags": [
+        "-DGIT_SSH",
+        "-DGIT_SSL",
+        "-w",
+      ],
+      "libraries":[
+        "/opt/local/lib/libssh2.so",
+        "/opt/local/lib/libssl.so",
+        "lib/64",
+        "/usr/lib/",
+        "/usr/lib/64"
       ],
       "dependencies": [
         "zlib",
         "http_parser/http_parser.gyp:http_parser",
-        "openssl/openssl.gyp:openssl",
-        "libssh2"
+        #"openssl/openssl.gyp:openssl",
+        #"libssh2"
       ],
       "sources": [
+        #SUNOS
+        #"libgit2/src/unix/posix.c",
+        "libgit2/src/unix/posix.h",
+        "libgit2/src/tls_stream.c",
+        "libgit2/src/tls_stream.h",
+
         "libgit2/include/git2/sys/hashsig.h",
         "libgit2/include/git2/sys/merge.h",
         "libgit2/src/annotated_commit.c",
@@ -160,8 +184,8 @@
         "libgit2/src/pathspec.h",
         "libgit2/src/pool.c",
         "libgit2/src/pool.h",
-        "libgit2/src/posix.c",
-        "libgit2/src/posix.h",
+        #"libgit2/src/posix.c",
+        #"libgit2/src/posix.h",
         "libgit2/src/pqueue.c",
         "libgit2/src/pqueue.h",
         "libgit2/src/proxy.c",
@@ -442,68 +466,68 @@
           "libgit2/deps/zlib",
         ],
       },
-    },
-    {
-      "target_name": "libssh2",
-      "type": "static_library",
-      "defines": [
-        "NETSNMP_ENABLE_IPV6"
-      ],
-      "sources": [
-        "libssh2/src/agent.c",
-        "libssh2/src/crypt.c",
-        "libssh2/src/keepalive.c",
-        "libssh2/src/libgcrypt.c",
-        "libssh2/src/openssl.c",
-        "libssh2/src/publickey.c",
-        "libssh2/src/sftp.c",
-        "libssh2/src/version.c",
-        "libssh2/src/channel.c",
-        "libssh2/src/global.c",
-        "libssh2/src/kex.c",
-        "libssh2/src/mac.c",
-        "libssh2/src/packet.c",
-        "libssh2/src/scp.c",
-        "libssh2/src/transport.c",
-        "libssh2/src/comp.c",
-        "libssh2/src/hostkey.c",
-        "libssh2/src/knownhost.c",
-        "libssh2/src/misc.c",
-        "libssh2/src/pem.c",
-        "libssh2/src/session.c",
-        "libssh2/src/userauth.c",
-      ],
-      "include_dirs": [
-        ".",
-        "libssh2/include",
-      ],
-      "dependencies": [
-        "openssl/openssl.gyp:openssl"
-      ],
-      "direct_dependent_settings": {
-        "include_dirs": [
-          "libssh2/include"
-        ]
-      },
-      "conditions": [
-        ["OS=='win'", {
-          "include_dirs": [
-            "libssh2/src",
-            "libssh2/win32",
-            "libssh2/include"
-          ],
-          "defines!": [
-            "HAVE_POLL"
-          ],
-          "direct_dependent_settings": {
-            "include_dirs": [
-              "libssh2/src",
-              "libssh2/win32",
-              "libssh2/include"
-            ]
-          }
-        }],
-      ]
+#    },
+#    {
+#      "target_name": "libssh2",
+#      "type": "static_library",
+#      "defines": [
+#        "NETSNMP_ENABLE_IPV6"
+#      ],
+#      "sources": [
+#        "libssh2/src/agent.c",
+#        "libssh2/src/crypt.c",
+#        "libssh2/src/keepalive.c",
+#        "libssh2/src/libgcrypt.c",
+#        "libssh2/src/openssl.c",
+#        "libssh2/src/publickey.c",
+#        "libssh2/src/sftp.c",
+#        "libssh2/src/version.c",
+#        "libssh2/src/channel.c",
+#        "libssh2/src/global.c",
+#        "libssh2/src/kex.c",
+#        "libssh2/src/mac.c",
+#        "libssh2/src/packet.c",
+#        "libssh2/src/scp.c",
+#        "libssh2/src/transport.c",
+#        "libssh2/src/comp.c",
+#        "libssh2/src/hostkey.c",
+#        "libssh2/src/knownhost.c",
+#        "libssh2/src/misc.c",
+#        "libssh2/src/pem.c",
+#        "libssh2/src/session.c",
+#        "libssh2/src/userauth.c",
+#      ],
+#      "include_dirs": [
+#        ".",
+#        "libssh2/include",
+#      ],
+#      "dependencies": [
+#        #"openssl/openssl.gyp:openssl"
+#      ],
+#      "direct_dependent_settings": {
+#        "include_dirs": [
+#          "libssh2/include"
+#        ]
+#      },
+#      "conditions": [
+#        ["OS=='win'", {
+#          "include_dirs": [
+#            "libssh2/src",
+#            "libssh2/win32",
+#            "libssh2/include"
+#          ],
+#          "defines!": [
+#            "HAVE_POLL"
+#          ],
+#          "direct_dependent_settings": {
+#            "include_dirs": [
+#              "libssh2/src",
+#              "libssh2/win32",
+#              "libssh2/include"
+#            ]
+#          }
+#        }],
+#      ]
     }
   ]
 }

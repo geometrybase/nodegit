@@ -24,7 +24,7 @@
   "main": "dist/nodegit.js",
   "repository": {
     "type": "git",
-    "url": "git://github.com/nodegit/nodegit.git"
+    "url":"git://github.com/geometrybase/nodegit.git"
   },
   "directories": {
     "build": "./build",
@@ -81,7 +81,7 @@
     "postinstall": "node lifecycleScripts/postinstall",
     "preinstall": "node lifecycleScripts/preinstall",
     "prepublish": "npm run babel",
-    "rebuild": "node generate && npm run babel && node-gyp configure build",
+    "rebuild": "node generate && npm run babel && node-gyp configure --arch=x64 build",
     "rebuildDebug": "node generate && npm run babel && node-gyp configure --debug build",
     "recompile": "node-gyp configure build",
     "recompileDebug": "node-gyp configure --debug build",

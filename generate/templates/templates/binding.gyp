@@ -11,6 +11,11 @@
         "coverage%": 0
       },
 
+      "libraries":[
+        "/opt/local/lib/libssh2.so",
+        "/opt/local/lib/libssl.so"
+      ],
+
       "sources": [
         "src/lock_master.cc",
         "src/nodegit.cc",
@@ -31,9 +36,11 @@
       ],
 
       "include_dirs": [
+        "/opt/local/include/",
+        "/opt/local/include/openssl/",
         "vendor/libv8-convert",
         "vendor/libssh2/include",
-        "vendor/openssl/openssl/include",
+        #"vendor/openssl/openssl/include",
         "<!(node -e \"require('nan')\")"
       ],
 
